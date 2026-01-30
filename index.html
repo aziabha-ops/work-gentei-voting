@@ -15,7 +15,7 @@
             justify-content: center;
             padding: 20px;
         }
-        .container { max-width: 800px; width: 100%; }
+        .container { max-width: 900px; width: 100%; }
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -65,9 +65,11 @@
             display: flex;
             gap: 20px;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
         .role-btn {
             flex: 1;
+            min-width: 150px;
             padding: 30px;
             border: 2px solid rgba(0,212,255,0.2);
             background: rgba(0,0,0,0.2);
@@ -103,7 +105,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        input[type="text"], input[type="email"] {
+        input[type="text"] {
             width: 100%;
             padding: 12px 15px;
             background: rgba(0,0,0,0.2);
@@ -115,7 +117,7 @@
             transition: all 0.2s ease;
             margin-bottom: 15px;
         }
-        input[type="text"]:focus, input[type="email"]:focus {
+        input[type="text"]:focus {
             outline: none;
             border-color: #00d4ff;
             background: rgba(0,212,255,0.05);
@@ -183,19 +185,33 @@
         .form-group {
             margin-bottom: 25px;
         }
+        
+        .car-selector {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        
+        .select-wrapper {
+            flex: 1;
+            min-width: 250px;
+        }
+        
         .car-image {
-            width: 100%;
-            height: 180px;
+            width: 120px;
+            height: 120px;
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(0,212,255,0.1);
             border-radius: 8px;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             overflow: hidden;
+            flex-shrink: 0;
         }
         .car-image img {
             width: 100%;
@@ -203,6 +219,7 @@
             object-fit: contain;
             background: rgba(0,0,0,0.1);
         }
+        
         select {
             width: 100%;
             padding: 12px 15px;
@@ -246,12 +263,14 @@
             font-weight: 900;
             font-size: 1.1rem;
             font-family: monospace;
+            word-break: break-all;
         }
         .button-group {
             display: flex;
             gap: 15px;
             justify-content: space-between;
             margin-top: 35px;
+            flex-wrap: wrap;
         }
         button {
             padding: 14px 24px;
@@ -265,7 +284,7 @@
         .btn-back {
             background: rgba(0,0,0,0.2);
             color: #999;
-            flex: 0 0 auto;
+            flex: 0 1 auto;
             border: 1px solid rgba(0,212,255,0.1);
         }
         .btn-back:hover { background: rgba(0,212,255,0.08); color: #00d4ff; }
@@ -280,6 +299,7 @@
             font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            min-width: 150px;
         }
         .btn-next:hover:not(:disabled) { 
             transform: translateY(-2px); 
@@ -299,6 +319,29 @@
             color: #dc143c;
             font-size: 0.85rem;
             margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .card {
+                padding: 25px;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            .category-title {
+                font-size: 1.4rem;
+            }
+            .car-selector {
+                flex-direction: column;
+            }
+            .car-image {
+                width: 100%;
+                height: 150px;
+            }
+            .btn-next, .btn-back {
+                padding: 12px 16px;
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
@@ -326,12 +369,6 @@
                         <span class="error" id="nameError"></span>
                     </div>
 
-                    <div class="name-input-section" id="emailSection" style="display: none;">
-                        <label for="voterEmail">Email *</label>
-                        <input type="email" id="voterEmail" placeholder="your@email.com">
-                        <span class="error" id="emailError"></span>
-                    </div>
-
                     <button class="btn-start" onclick="startVoting()">Begin Voting</button>
                 </div>
             </div>
@@ -351,51 +388,46 @@
         const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/`;
 
         const carData = [
-            { make: 'BMW', model: 'E92 M3', cloudId: 'Amit_Doolab_-_E92_M3_kofsoh' },
-            { make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Avi_-_Golf_mk2_mjbb8k' },
-            { make: 'BMW', model: '850i', cloudId: 'Chip_Moosa_-_850i_rb0mzg' },
-            { make: 'BMW', model: '635 CSI', cloudId: 'Chip_Moosa_-_635_CSI_rgkz7l' },
-            { make: 'BMW', model: 'E39 535i', cloudId: 'Chip_Moosa_-_535i_tdt29a' },
-            { make: 'BMW', model: 'E30 325is', cloudId: 'Chip_Moosa_-_E30_325is_bqzehc' },
-            { make: 'Mercedes', model: 'C63', cloudId: 'Devan_Moonsammy_-_C63_uooh7u' },
-            { make: 'BMW', model: 'E46 M3', cloudId: 'Devan_Moonsammy_-_E46_M3_pz2lp0' },
-            { make: 'BMW', model: 'E92 M3', cloudId: 'Dhiresh_Dewnaryan_-_E92_M3_glzulq' },
-            { make: 'Volkswagen', model: 'CITI', cloudId: 'Dooshen_Pillay_-_CITI_l6zbqk' },
-            { make: 'BMW', model: 'E30 325i', cloudId: 'Dooshen_Pillay_-_E30_325i_zex0za' },
-            { make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Dooshen_Pillay_-_Golf_mk2_elbqoz' },
-            { make: 'BMW', model: 'E92 M3', cloudId: 'Duen_Reddy_-_E92_M3_pokjwh' },
-            { make: 'BMW', model: 'M Coupe', cloudId: 'Duen_Reddy_-_M_Coupe_bz8jyx' },
-            { make: 'BMW', model: 'F80 M3', cloudId: 'Dwayne_Santos_-_F80_M3_abfqql' },
-            { make: 'Volkswagen', model: 'Golf 7R', cloudId: 'Faadil_Osman_-_Golf_7R_ifiy2y' },
-            { make: 'BMW', model: 'E30 325is', cloudId: 'Fayaz_Sirkhot_-_E30_325is_lrksca' },
-            { make: 'Volkswagen', model: 'Citirox', cloudId: 'Harris_Chelladu_-_Citirox_vxtqre' },
-            { make: 'Volkswagen', model: 'Golf 8R', cloudId: 'Harris_Chelladu_-_Golf_8R_vrddaa' },
-            { make: 'Volkswagen', model: 'Golf 6R', cloudId: 'Irfaan_Osman_-_Golf_6R_ns6djr' },
-            { make: 'BMW', model: 'E30 325i', cloudId: 'Krinash_Naidoo_-_E30_325i_j4jx1l' },
-            { make: 'BMW', model: 'E36 325i cab', cloudId: 'Kugan_Munsami_-_E36_325i_cab_ezhnaq' },
-            { make: 'Volkswagen', model: 'Golf 4', cloudId: null },
-            { make: 'BMW', model: 'VR6', cloudId: 'Leonard_-_VR6_svvxai' },
-            { make: 'BMW', model: 'E30 M3', cloudId: 'Manny_-_E30_M3_ssynpv' },
-            { make: 'BMW', model: 'E92 M3', cloudId: 'Marco_Ferreira_-_E92_M3_lwrq83' },
-            { make: 'Audi', model: 'S3', cloudId: 'Milano_-_S3_xxzhy' },
-            { make: 'BMW', model: 'E30', cloudId: null },
-            { make: 'BMW', model: 'E28', cloudId: null },
-            { make: 'Porsche', model: '997 turbo', cloudId: 'Neeresh_Pablo_-_997_turbo_c4fjuj' },
-            { make: 'BMW', model: 'E46 330ci', cloudId: null },
-            { make: 'Audi', model: 'RS3', cloudId: 'Preshalan_Naidoo_-_RS3_b8yhps' },
-            { make: 'BMW', model: 'E30 325is', cloudId: 'Preshan_Ramoorthy_-_E30_325is_znjlkw' },
-            { make: 'BMW', model: 'M2 Comp', cloudId: 'Preshan_Ramoorthy_-_M2_Comp_mua3of' },
-            { make: 'BMW', model: 'E46 M3', cloudId: 'Revaun_Modern_-_E46_M3_wfivs5' },
-            { make: 'BMW', model: 'E92 M3', cloudId: 'Revaun_Modern_-_E92_M3_x4cq7y' },
-            { make: 'Toyota', model: 'GT86', cloudId: 'Ronnie_James_Botes_-_GT86_qznmeq' },
-            { make: 'BMW', model: 'F80 M3', cloudId: 'Rushay_Nana_-_F80_M3_ixg6fv' },
-            { make: 'Volkswagen', model: 'Citi velocity 1.4i', cloudId: 'Shaheed_Collins_-_Citi_velocity_1.4i_tgyp78' },
-            { make: 'BMW', model: 'E30 Bauer', cloudId: 'Teyen_Naidoo_-_E30_Bauer_h5opqo' },
-            { make: 'Volkswagen', model: 'Golf 2', cloudId: null },
-            { make: 'BMW', model: 'E92 M3', cloudId: 'Uwais_Mohideen_-_E92_M3_j2jfyp' },
-            { make: 'BMW', model: 'E30 Box', cloudId: null },
-            { make: 'BMW', model: 'E90 M3', cloudId: null },
-            { make: 'Mercedes Benz', model: 'SL63', cloudId: 'Zaahid_Vally_-_M3_Comp_xr9wff' }
+            { name: 'Amit Doolab', make: 'BMW', model: 'E92 M3', cloudId: 'Amit_Doolab_-_E92_M3_kofsoh' },
+            { name: 'Avi', make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Avi_-_Golf_mk2_mjbb8k' },
+            { name: 'Chip Moosa', make: 'BMW', model: '850i', cloudId: 'Chip_Moosa_-_850i_rb0mzg' },
+            { name: 'Chip Moosa', make: 'BMW', model: 'E39 535i', cloudId: 'Chip_Moosa_-_535i_tdt29a' },
+            { name: 'Chip Moosa', make: 'BMW', model: 'E30 325is', cloudId: 'Chip_Moosa_-_E30_325is_bqzehc' },
+            { name: 'Devan Moonsammy', make: 'BMW', model: 'E46 M3', cloudId: 'Devan_Moonsammy_-_E46_M3_pz2lp0' },
+            { name: 'Devan Moonsammy', make: 'Mercedes', model: 'C63', cloudId: 'Devan_Moonsammy_-_C63_uooh7u' },
+            { name: 'Dhiresh Dewnaryan', make: 'BMW', model: 'E92 M3', cloudId: 'Dhiresh_Dewnaryan_-_E92_M3_glzulq' },
+            { name: 'Dooshen Pillay', make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Dooshen_Pillay_-_Golf_mk2_elbqoz' },
+            { name: 'Dooshen Pillay', make: 'BMW', model: 'E30 325i', cloudId: 'Dooshen_Pillay_-_E30_325i_zex0za' },
+            { name: 'Dooshen Pillay', make: 'Volkswagen', model: 'CITI', cloudId: 'Dooshen_Pillay_-_CITI_l6zbqk' },
+            { name: 'Duen Reddy', make: 'BMW', model: 'M Coupe', cloudId: 'Duen_Reddy_-_M_Coupe_bz8jyx' },
+            { name: 'Duen Reddy', make: 'BMW', model: 'E92 M3', cloudId: 'Duen_Reddy_-_E92_M3_pokjwh' },
+            { name: 'Dwayne Santos', make: 'BMW', model: 'F80 M3', cloudId: 'Dwayne_Santos_-_F80_M3_abfqql' },
+            { name: 'Faadil Osman', make: 'Volkswagen', model: 'Golf 7R', cloudId: 'Faadil_Osman_-_Golf_7R_ifiy2y' },
+            { name: 'Fayaz Sirkhot', make: 'BMW', model: 'E30 325is', cloudId: 'Fayaz_Sirkhot_-_E30_325is_lrksca' },
+            { name: 'Harris Chelladu', make: 'Volkswagen', model: 'Citirox', cloudId: 'Harris_Chelladu_-_Citirox_vxtqre' },
+            { name: 'Harris Chelladu', make: 'Volkswagen', model: 'Golf 8R', cloudId: 'Harris_Chelladu_-_Golf_8R_vrddaa' },
+            { name: 'Irfan Osman', make: 'Volkswagen', model: 'Golf 6R', cloudId: 'Irfaan_Osman_-_Golf_6R_ns6djr' },
+            { name: 'Krinash Naidoo', make: 'BMW', model: 'E30 325i', cloudId: 'Krinash_Naidoo_-_E30_325i_j4jx1l' },
+            { name: 'Kugan Munsami', make: 'BMW', model: 'E36 cab', cloudId: 'Kugan_Munsami_-_E36_325i_cab_ezhnaq' },
+            { name: 'Leighton Pillay', make: 'Volkswagen', model: 'Golf 4, 2 door', cloudId: null },
+            { name: 'Leonard', make: 'Volkswagen', model: 'VR6', cloudId: 'Leonard_-_VR6_svvxai' },
+            { name: 'Manny', make: 'BMW', model: 'E30 M3', cloudId: 'Manny_-_E30_M3_ssynpv' },
+            { name: 'Marco Ferreira', make: 'BMW', model: 'E92 M3', cloudId: 'Marco_Ferreira_-_E92_M3_lwrq83' },
+            { name: 'Milano', make: 'Audi', model: 'S3', cloudId: 'Milano_-_S3_xxzhy' },
+            { name: 'Naeem Seedat', make: 'BMW', model: 'E28 M5', cloudId: null },
+            { name: 'Neeresh Pablo', make: 'Porsche', model: '997 turbo', cloudId: 'Neeresh_Pablo_-_997_turbo_c4fjuj' },
+            { name: 'Preshalan Naidoo', make: 'Audi', model: 'RS3', cloudId: 'Preshalan_Naidoo_-_RS3_b8yhps' },
+            { name: 'Preshan Ramoorthy', make: 'BMW', model: 'E30 325is', cloudId: 'Preshan_Ramoorthy_-_E30_325is_znjlkw' },
+            { name: 'Preshan Ramoorthy', make: 'BMW', model: 'M2 Comp', cloudId: 'Preshan_Ramoorthy_-_M2_Comp_mua3of' },
+            { name: 'Revaun Modern', make: 'BMW', model: 'E92 M3', cloudId: 'Revaun_Modern_-_E92_M3_x4cq7y' },
+            { name: 'Revaun Modern', make: 'BMW', model: 'E46 M3', cloudId: 'Revaun_Modern_-_E46_M3_wfivs5' },
+            { name: 'Ronnie James Botes', make: 'Toyota', model: 'GT86', cloudId: 'Ronnie_James_Botes_-_GT86_qznmeq' },
+            { name: 'Rushay Nana', make: 'BMW', model: 'F80 M3', cloudId: 'Rushay_Nana_-_F80_M3_ixg6fv' },
+            { name: 'Shaheed Collins', make: 'Volkswagen', model: 'Citi velocity 1.4i', cloudId: 'Shaheed_Collins_-_Citi_velocity_1.4i_tgyp78' },
+            { name: 'Teyen Naidoo', make: 'BMW', model: 'E30 Bauer', cloudId: 'Teyen_Naidoo_-_E30_Bauer_h5opqo' },
+            { name: 'Uwais Mohideen', make: 'BMW', model: 'E92 M3', cloudId: 'Uwais_Mohideen_-_E92_M3_j2jfyp' },
+            { name: 'Zaahid Vally', make: 'BMW', model: 'M3 Comp', cloudId: 'Zaahid_Vally_-_M3_Comp_xr9wff' },
+            { name: 'Pravesh Niacker', make: 'BMW', model: 'E46 330ci', cloudId: null }
         ];
 
         const entrantCategories = [
@@ -412,7 +444,6 @@
 
         let selectedRole = null;
         let voterName = '';
-        let voterEmail = '';
         let currentCategory = 0;
         let categories = [];
         let votes = {};
@@ -421,18 +452,10 @@
             selectedRole = role;
             document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
-            
-            const emailSection = document.getElementById('emailSection');
-            if (role === 'entrant') {
-                emailSection.style.display = 'block';
-            } else {
-                emailSection.style.display = 'none';
-            }
         }
 
         function startVoting() {
             document.getElementById('nameError').textContent = '';
-            document.getElementById('emailError').textContent = '';
 
             voterName = document.getElementById('voterName').value.trim();
             if (!voterName) {
@@ -441,11 +464,6 @@
             }
 
             if (selectedRole === 'entrant') {
-                voterEmail = document.getElementById('voterEmail').value.trim();
-                if (!voterEmail) {
-                    document.getElementById('emailError').textContent = 'Email required';
-                    return;
-                }
                 categories = entrantCategories;
             } else if (selectedRole === 'spectator') {
                 categories = spectatorCategories;
@@ -468,7 +486,7 @@
             document.getElementById('progressFill').style.width = `${((currentCategory + 1) / categories.length) * 100}%`;
             
             container.innerHTML = `
-                <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
                     <span style="font-size: 3rem;">${cat.icon}</span>
                     <div style="flex: 1;">
                         <h2 class="category-title">${cat.title}</h2>
@@ -476,13 +494,17 @@
                     </div>
                 </div>
                 <div class="criteria">${cat.criteria}</div>
-                <div class="car-image" id="carImageContainer"></div>
                 <div class="form-group">
                     <label for="carSelect">Select a Vehicle</label>
-                    <select id="carSelect" onchange="updateSelection()">
-                        <option value="">-- Choose a vehicle --</option>
-                        ${carData.map((car, idx) => `<option value="${idx}">Car ${idx + 1}_${car.make}_${car.model}</option>`).join('')}
-                    </select>
+                    <div class="car-selector">
+                        <div class="select-wrapper">
+                            <select id="carSelect" onchange="updateSelection()">
+                                <option value="">-- Choose a vehicle --</option>
+                                ${carData.map((car, idx) => `<option value="${idx}">Car ${idx + 1} | ${car.name} | ${car.make} ${car.model}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="car-image" id="carImageContainer"></div>
+                    </div>
                 </div>
                 <div id="confirm" class="selection-confirm"></div>
                 <div class="button-group">
@@ -507,15 +529,15 @@
                 
                 confirm.innerHTML = `
                     <div class="selection-confirm-text">Selected</div>
-                    <div class="selection-confirm-value">Car ${carNum}_${car.make}_${car.model}</div>
+                    <div class="selection-confirm-value">Car ${carNum} | ${car.name} | ${car.make} ${car.model}</div>
                 `;
                 confirm.classList.add('show');
                 
                 if (car.cloudId) {
                     const imageUrl = CLOUDINARY_BASE + car.cloudId;
-                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${carNum}" onerror="this.parentElement.innerHTML='<div style=\"text-align: center; color: #999; padding: 20px;\">Car ${carNum} Image</div>';">`;
+                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${carNum}" onerror="this.parentElement.innerHTML='<div style=\"text-align: center; color: #999; padding: 10px; font-size: 0.8rem;\">Car ${carNum}</div>';">`;
                 } else {
-                    carImageContainer.innerHTML = `<div style="text-align: center; color: #999; padding: 20px;">Car ${carNum} Image</div>`;
+                    carImageContainer.innerHTML = `<div style="text-align: center; color: #999; padding: 10px; font-size: 0.8rem;">Car ${carNum}</div>`;
                 }
                 
                 nextBtn.disabled = false;
@@ -533,6 +555,13 @@
                 renderCategory();
             } else {
                 const role = selectedRole === 'entrant' ? 'Entrant' : 'Spectator';
+                const voteData = {
+                    voter: voterName,
+                    role: role,
+                    timestamp: new Date().toISOString(),
+                    votes: votes
+                };
+                console.log('VOTES SUBMITTED:', JSON.stringify(voteData, null, 2));
                 alert(`✓ All votes submitted!\n\nVoter: ${voterName}\nRole: ${role}\n\nThank you for voting!`);
                 location.reload();
             }
