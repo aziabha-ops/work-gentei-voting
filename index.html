@@ -182,42 +182,35 @@
             font-size: 0.95rem;
             line-height: 1.6;
         }
-        .form-group {
-            margin-bottom: 25px;
-        }
         
         .car-selector {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
             gap: 20px;
             margin-bottom: 25px;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
-        
-        .select-wrapper {
-            flex: 1;
-            min-width: 250px;
+            align-items: start;
         }
         
         .car-image {
-            width: 120px;
-            height: 120px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(0,212,255,0.1);
+            width: 100%;
+            height: 280px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,212,255,0.2);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
-            font-size: 0.8rem;
             overflow: hidden;
-            flex-shrink: 0;
+            order: 2;
         }
         .car-image img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            background: rgba(0,0,0,0.1);
+        }
+        
+        .select-wrapper {
+            order: 1;
         }
         
         select {
@@ -248,6 +241,8 @@
             padding: 15px;
             border-radius: 8px;
             margin-top: 15px;
+            order: 3;
+            grid-column: 1 / -1;
         }
         .selection-confirm.show { display: block; }
         .selection-confirm-text {
@@ -332,11 +327,18 @@
                 font-size: 1.4rem;
             }
             .car-selector {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
             .car-image {
-                width: 100%;
-                height: 150px;
+                order: 1;
+                height: 200px;
+            }
+            .select-wrapper {
+                order: 2;
+            }
+            .selection-confirm {
+                order: 3;
+                grid-column: 1;
             }
             .btn-next, .btn-back {
                 padding: 12px 16px;
@@ -386,6 +388,7 @@
     <script>
         const CLOUDINARY_CLOUD = 'dbee9zuk5';
         const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/`;
+        const GOOGLE_APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
         const carData = [
             { name: 'Amit Doolab', make: 'BMW', model: 'E92 M3', cloudId: 'Amit_Doolab_-_E92_M3_kofsoh' },
@@ -494,19 +497,17 @@
                     </div>
                 </div>
                 <div class="criteria">${cat.criteria}</div>
-                <div class="form-group">
-                    <label for="carSelect">Select a Vehicle</label>
-                    <div class="car-selector">
-                        <div class="select-wrapper">
-                            <select id="carSelect" onchange="updateSelection()">
-                                <option value="">-- Choose a vehicle --</option>
-                                ${carData.map((car, idx) => `<option value="${idx}">Car ${idx + 1} | ${car.name} | ${car.make} ${car.model}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="car-image" id="carImageContainer"></div>
+                <div class="car-selector">
+                    <div class="select-wrapper">
+                        <label for="carSelect">Select a Vehicle</label>
+                        <select id="carSelect" onchange="updateSelection()">
+                            <option value="">-- Choose --</option>
+                            ${carData.map((car, idx) => `<option value="${idx}">Car ${idx + 1} | ${car.name} | ${car.make} ${car.model}</option>`).join('')}
+                        </select>
                     </div>
+                    <div class="car-image" id="carImageContainer"></div>
+                    <div id="confirm" class="selection-confirm"></div>
                 </div>
-                <div id="confirm" class="selection-confirm"></div>
                 <div class="button-group">
                     <button class="btn-back" onclick="previousCategory()" ${currentCategory === 0 ? 'disabled' : ''}>← Back</button>
                     <button class="btn-next" id="nextBtn" onclick="nextCategory()" disabled>
@@ -535,9 +536,9 @@
                 
                 if (car.cloudId) {
                     const imageUrl = CLOUDINARY_BASE + car.cloudId;
-                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${carNum}" onerror="this.parentElement.innerHTML='<div style=\"text-align: center; color: #999; padding: 10px; font-size: 0.8rem;\">Car ${carNum}</div>';">`;
+                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${carNum}">`;
                 } else {
-                    carImageContainer.innerHTML = `<div style="text-align: center; color: #999; padding: 10px; font-size: 0.8rem;">Car ${carNum}</div>`;
+                    carImageContainer.innerHTML = '';
                 }
                 
                 nextBtn.disabled = false;
@@ -561,10 +562,26 @@
                     timestamp: new Date().toISOString(),
                     votes: votes
                 };
-                console.log('VOTES SUBMITTED:', JSON.stringify(voteData, null, 2));
+                
+                submitVotesToGoogle(voteData);
+                
                 alert(`✓ All votes submitted!\n\nVoter: ${voterName}\nRole: ${role}\n\nThank you for voting!`);
                 location.reload();
             }
+        }
+
+        function submitVotesToGoogle(voteData) {
+            if (GOOGLE_APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                console.log('Google Apps Script URL not configured. Votes logged to console:');
+                console.log(JSON.stringify(voteData, null, 2));
+                return;
+            }
+
+            fetch(GOOGLE_APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(voteData)
+            }).catch(e => console.error('Submit error:', e));
         }
 
         function previousCategory() {
