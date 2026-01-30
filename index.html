@@ -55,7 +55,6 @@
         .screen { display: none; }
         .screen.active { display: block; }
         
-        /* ROLE SELECTION SCREEN */
         .role-screen h2 {
             font-size: 2rem;
             color: white;
@@ -92,7 +91,6 @@
             color: #dc143c;
         }
         
-        /* VOTER NAME INPUT */
         .name-input-section {
             margin-bottom: 30px;
         }
@@ -148,7 +146,6 @@
             cursor: not-allowed;
         }
         
-        /* VOTING SCREEN */
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -188,7 +185,7 @@
         }
         .car-image {
             width: 100%;
-            height: 250px;
+            height: 180px;
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(0,212,255,0.1);
             border-radius: 8px;
@@ -203,7 +200,8 @@
         .car-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            background: rgba(0,0,0,0.1);
         }
         select {
             width: 100%;
@@ -291,12 +289,6 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            color: #666;
-            font-size: 0.85rem;
-        }
         .voter-info {
             text-align: center;
             color: #666;
@@ -319,7 +311,6 @@
         </div>
 
         <div class="card">
-            <!-- ROLE SELECTION SCREEN -->
             <div class="screen active" id="roleScreen">
                 <div class="role-screen">
                     <h2>Select Your Role</h2>
@@ -345,7 +336,6 @@
                 </div>
             </div>
 
-            <!-- VOTING SCREEN -->
             <div class="screen" id="votingScreen">
                 <div class="voter-info" id="voterInfo"></div>
                 <div class="progress-bar">
@@ -362,49 +352,49 @@
 
         const carData = [
             { make: 'BMW', model: 'E92 M3', cloudId: 'Amit_Doolab_-_E92_M3_kofsoh' },
-            { make: 'Volkswagen', model: 'Golf mk2', cloudId: 'AVI_-_Golf_mk2_mjbb8k' },
-            { make: 'BMW', model: '850i', cloudId: 'Chip_Moosa_-_850i_Lrb0mzg' },
+            { make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Avi_-_Golf_mk2_mjbb8k' },
+            { make: 'BMW', model: '850i', cloudId: 'Chip_Moosa_-_850i_rb0mzg' },
             { make: 'BMW', model: '635 CSI', cloudId: 'Chip_Moosa_-_635_CSI_rgkz7l' },
             { make: 'BMW', model: 'E39 535i', cloudId: 'Chip_Moosa_-_535i_tdt29a' },
             { make: 'BMW', model: 'E30 325is', cloudId: 'Chip_Moosa_-_E30_325is_bqzehc' },
-            { make: 'BMW', model: 'M3', cloudId: 'Devan_Moonsammy_-_E46_M3_pz2lp0' },
             { make: 'Mercedes', model: 'C63', cloudId: 'Devan_Moonsammy_-_C63_uooh7u' },
+            { make: 'BMW', model: 'E46 M3', cloudId: 'Devan_Moonsammy_-_E46_M3_pz2lp0' },
             { make: 'BMW', model: 'E92 M3', cloudId: 'Dhiresh_Dewnaryan_-_E92_M3_glzulq' },
-            { make: 'Volkswagen', model: 'Golf 2', cloudId: 'Dooshen_Pillay_-_Golf_mk2_elbqoz' },
-            { make: 'BMW', model: 'E30', cloudId: 'Dooshen_Pillay_-_E30_325i_zex0za' },
             { make: 'Volkswagen', model: 'CITI', cloudId: 'Dooshen_Pillay_-_CITI_l6zbqk' },
+            { make: 'BMW', model: 'E30 325i', cloudId: 'Dooshen_Pillay_-_E30_325i_zex0za' },
+            { make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Dooshen_Pillay_-_Golf_mk2_elbqoz' },
             { make: 'BMW', model: 'E92 M3', cloudId: 'Duen_Reddy_-_E92_M3_pokjwh' },
             { make: 'BMW', model: 'M Coupe', cloudId: 'Duen_Reddy_-_M_Coupe_bz8jyx' },
             { make: 'BMW', model: 'F80 M3', cloudId: 'Dwayne_Santos_-_F80_M3_abfqql' },
             { make: 'Volkswagen', model: 'Golf 7R', cloudId: 'Faadil_Osman_-_Golf_7R_ifiy2y' },
-            { make: 'BMW', model: 'E30', cloudId: 'Fayaz_Sirkhot_-_E30_325is_lrksca' },
+            { make: 'BMW', model: 'E30 325is', cloudId: 'Fayaz_Sirkhot_-_E30_325is_lrksca' },
             { make: 'Volkswagen', model: 'Citirox', cloudId: 'Harris_Chelladu_-_Citirox_vxtqre' },
             { make: 'Volkswagen', model: 'Golf 8R', cloudId: 'Harris_Chelladu_-_Golf_8R_vrddaa' },
             { make: 'Volkswagen', model: 'Golf 6R', cloudId: 'Irfaan_Osman_-_Golf_6R_ns6djr' },
-            { make: 'BMW', model: 'E30', cloudId: 'Krinash_Naidoo_-_E30_325i_j4jx1l' },
-            { make: 'BMW', model: 'E36 cab', cloudId: 'Kugan_Munsami_-_E36_325i_cab_ezhnaq' },
-            { make: 'Volkswagen', model: 'Golf 4, 2 door', cloudId: 'placeholder' },
-            { make: 'Volkswagen', model: 'VR6', cloudId: 'Leonard_-_VR6_svvxai' },
+            { make: 'BMW', model: 'E30 325i', cloudId: 'Krinash_Naidoo_-_E30_325i_j4jx1l' },
+            { make: 'BMW', model: 'E36 325i cab', cloudId: 'Kugan_Munsami_-_E36_325i_cab_ezhnaq' },
+            { make: 'Volkswagen', model: 'Golf 4', cloudId: null },
+            { make: 'BMW', model: 'VR6', cloudId: 'Leonard_-_VR6_svvxai' },
             { make: 'BMW', model: 'E30 M3', cloudId: 'Manny_-_E30_M3_ssynpv' },
-            { make: 'BMW', model: 'M3', cloudId: 'Marco_Ferreira_-_E92_M3_lwrq83' },
+            { make: 'BMW', model: 'E92 M3', cloudId: 'Marco_Ferreira_-_E92_M3_lwrq83' },
             { make: 'Audi', model: 'S3', cloudId: 'Milano_-_S3_xxzhy' },
-            { make: 'BMW', model: 'E30', cloudId: 'placeholder' },
-            { make: 'BMW', model: 'E28', cloudId: 'placeholder' },
+            { make: 'BMW', model: 'E30', cloudId: null },
+            { make: 'BMW', model: 'E28', cloudId: null },
             { make: 'Porsche', model: '997 turbo', cloudId: 'Neeresh_Pablo_-_997_turbo_c4fjuj' },
-            { make: 'BMW', model: 'E46 330ci', cloudId: 'placeholder' },
+            { make: 'BMW', model: 'E46 330ci', cloudId: null },
             { make: 'Audi', model: 'RS3', cloudId: 'Preshalan_Naidoo_-_RS3_b8yhps' },
             { make: 'BMW', model: 'E30 325is', cloudId: 'Preshan_Ramoorthy_-_E30_325is_znjlkw' },
             { make: 'BMW', model: 'M2 Comp', cloudId: 'Preshan_Ramoorthy_-_M2_Comp_mua3of' },
-            { make: 'BMW', model: 'E92', cloudId: 'Revaun_Modern_-_E92_M3_x4cq7y' },
             { make: 'BMW', model: 'E46 M3', cloudId: 'Revaun_Modern_-_E46_M3_wfivs5' },
+            { make: 'BMW', model: 'E92 M3', cloudId: 'Revaun_Modern_-_E92_M3_x4cq7y' },
             { make: 'Toyota', model: 'GT86', cloudId: 'Ronnie_James_Botes_-_GT86_qznmeq' },
             { make: 'BMW', model: 'F80 M3', cloudId: 'Rushay_Nana_-_F80_M3_ixg6fv' },
             { make: 'Volkswagen', model: 'Citi velocity 1.4i', cloudId: 'Shaheed_Collins_-_Citi_velocity_1.4i_tgyp78' },
             { make: 'BMW', model: 'E30 Bauer', cloudId: 'Teyen_Naidoo_-_E30_Bauer_h5opqo' },
-            { make: 'Volkswagen', model: 'Golf 2', cloudId: 'Tyrell_Dayabhai_-_Golf_2_placeholder' },
-            { make: 'BMW', model: 'M3', cloudId: 'Uwais_Mohideen_-_E92_M3_j2jfyp' },
-            { make: 'BMW', model: 'E30 Box', cloudId: 'placeholder' },
-            { make: 'BMW', model: 'E90 M3', cloudId: 'placeholder' },
+            { make: 'Volkswagen', model: 'Golf 2', cloudId: null },
+            { make: 'BMW', model: 'E92 M3', cloudId: 'Uwais_Mohideen_-_E92_M3_j2jfyp' },
+            { make: 'BMW', model: 'E30 Box', cloudId: null },
+            { make: 'BMW', model: 'E90 M3', cloudId: null },
             { make: 'Mercedes Benz', model: 'SL63', cloudId: 'Zaahid_Vally_-_M3_Comp_xr9wff' }
         ];
 
@@ -521,12 +511,11 @@
                 `;
                 confirm.classList.add('show');
                 
-                // Display car image from Cloudinary
-                if (car.cloudId && car.cloudId !== 'placeholder') {
+                if (car.cloudId) {
                     const imageUrl = CLOUDINARY_BASE + car.cloudId;
-                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${carNum}" onerror="this.parentElement.innerHTML='<div style=\"text-align: center; color: #999;\">Car ${carNum} Image</div>';">`;
+                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${carNum}" onerror="this.parentElement.innerHTML='<div style=\"text-align: center; color: #999; padding: 20px;\">Car ${carNum} Image</div>';">`;
                 } else {
-                    carImageContainer.innerHTML = `<div style="text-align: center; color: #999;">Car ${carNum} Image</div>`;
+                    carImageContainer.innerHTML = `<div style="text-align: center; color: #999; padding: 20px;">Car ${carNum} Image</div>`;
                 }
                 
                 nextBtn.disabled = false;
