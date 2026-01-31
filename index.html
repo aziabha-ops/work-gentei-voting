@@ -54,7 +54,6 @@
         }
         .screen { display: none; }
         .screen.active { display: block; }
-        
         .role-screen h2 {
             font-size: 2rem;
             color: white;
@@ -92,7 +91,6 @@
             background: rgba(220,20,60,0.1);
             color: #dc143c;
         }
-        
         .name-input-section {
             margin-bottom: 30px;
         }
@@ -147,7 +145,6 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-        
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -182,7 +179,6 @@
             font-size: 0.95rem;
             line-height: 1.6;
         }
-        
         .car-selector {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -190,7 +186,6 @@
             margin-bottom: 25px;
             align-items: start;
         }
-        
         .car-image {
             width: 100%;
             height: 280px;
@@ -208,11 +203,9 @@
             height: 100%;
             object-fit: contain;
         }
-        
         .select-wrapper {
             order: 1;
         }
-        
         select {
             width: 100%;
             padding: 12px 15px;
@@ -257,8 +250,6 @@
             color: #00d4ff;
             font-weight: 900;
             font-size: 1.1rem;
-            font-family: monospace;
-            word-break: break-all;
         }
         .button-group {
             display: flex;
@@ -315,7 +306,6 @@
             font-size: 0.85rem;
             margin-top: 5px;
         }
-        
         @media (max-width: 768px) {
             .card {
                 padding: 25px;
@@ -359,18 +349,15 @@
             <div class="screen active" id="roleScreen">
                 <div class="role-screen">
                     <h2>Select Your Role</h2>
-                    
                     <div class="role-buttons">
                         <button class="role-btn" onclick="selectRole('entrant')">Work Gentei Entrant</button>
                         <button class="role-btn" onclick="selectRole('spectator')">Spectator</button>
                     </div>
-
                     <div class="name-input-section">
                         <label for="voterName">Your Name *</label>
                         <input type="text" id="voterName" placeholder="e.g. John Smith">
                         <span class="error" id="nameError"></span>
                     </div>
-
                     <button class="btn-start" onclick="startVoting()">Begin Voting</button>
                 </div>
             </div>
@@ -426,7 +413,7 @@
             { num: 33, name: 'Shaheed Collins', make: 'Volkswagen', model: 'Citi velocity 1.4i', cloudId: '33_VW_Citi_velocity_1.4i_hxensr' },
             { num: 34, name: 'Shanawaz Vally', make: 'BMW', model: '325is', cloudId: '34_BMW_325is_r4ovpo' },
             { num: 35, name: 'Teyen Naidoo', make: 'BMW', model: 'E30 Bauer', cloudId: '35_BMW_E30_Bauer_rsmvll' },
-            { num: 36, name: 'Uwais Mohideen', make: 'BMW', model: 'E92 M3', cloudId: '36_BMW_E92_M3_cy01rm' },
+            { num: 36, name: 'Uwais Mohideen', make: 'BMW', model: 'E92 M3', cloudId: '36_BMW_E92_M3_cy0Yrm' },
             { num: 37, name: 'Zaahid Vally', make: 'BMW', model: 'M3 Comp', cloudId: '37_BMW_M3_Comp_xsnelc' }
         ];
 
@@ -456,13 +443,11 @@
 
         function startVoting() {
             document.getElementById('nameError').textContent = '';
-
             voterName = document.getElementById('voterName').value.trim();
             if (!voterName) {
                 document.getElementById('nameError').textContent = 'Name required';
                 return;
             }
-
             if (selectedRole === 'entrant') {
                 categories = entrantCategories;
             } else if (selectedRole === 'spectator') {
@@ -471,7 +456,6 @@
                 alert('Please select a role');
                 return;
             }
-
             document.getElementById('roleScreen').classList.remove('active');
             document.getElementById('votingScreen').classList.add('active');
             renderCategory();
@@ -532,7 +516,7 @@
                 
                 if (car.cloudId) {
                     const imageUrl = CLOUDINARY_BASE + car.cloudId;
-                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${car.num}" onerror="this.parentElement.innerHTML='';">`;
+                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${car.num}" onerror="this.src=''; this.alt='Image not available';">`;
                 } else {
                     carImageContainer.innerHTML = '';
                 }
@@ -560,19 +544,12 @@
                 };
                 
                 submitVotesToGoogle(voteData);
-                
                 alert(`✓ All votes submitted!\n\nVoter: ${voterName}\nRole: ${role}\n\nThank you for voting!`);
                 location.reload();
             }
         }
 
         function submitVotesToGoogle(voteData) {
-            if (GOOGLE_APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-                console.log('Google Apps Script URL not configured. Votes logged to console:');
-                console.log(JSON.stringify(voteData, null, 2));
-                return;
-            }
-
             fetch(GOOGLE_APPS_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
