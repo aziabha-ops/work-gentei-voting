@@ -388,49 +388,46 @@
     <script>
         const CLOUDINARY_CLOUD = 'dbee9zuk5';
         const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/`;
-        const GOOGLE_APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyxaFljBGquG-6SxNihpeeDp-LkTrkhRYZybWkimYoA4VEjXLY0rxexw_S-WMwyt4DF/exec';
 
         const carData = [
-            { name: 'Amit Doolab', make: 'BMW', model: 'E92 M3', cloudId: 'Amit_Doolab_-_E92_M3_kofsoh' },
-            { name: 'Avi', make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Avi_-_Golf_mk2_mjbb8k' },
-            { name: 'Chip Moosa', make: 'BMW', model: '850i', cloudId: 'Chip_Moosa_-_850i_rb0mzg' },
-            { name: 'Chip Moosa', make: 'BMW', model: 'E39 535i', cloudId: 'Chip_Moosa_-_535i_tdt29a' },
-            { name: 'Chip Moosa', make: 'BMW', model: 'E30 325is', cloudId: 'Chip_Moosa_-_E30_325is_bqzehc' },
-            { name: 'Devan Moonsammy', make: 'BMW', model: 'E46 M3', cloudId: 'Devan_Moonsammy_-_E46_M3_pz2lp0' },
-            { name: 'Devan Moonsammy', make: 'Mercedes', model: 'C63', cloudId: 'Devan_Moonsammy_-_C63_uooh7u' },
-            { name: 'Dhiresh Dewnaryan', make: 'BMW', model: 'E92 M3', cloudId: 'Dhiresh_Dewnaryan_-_E92_M3_glzulq' },
-            { name: 'Dooshen Pillay', make: 'Volkswagen', model: 'Golf mk2', cloudId: 'Dooshen_Pillay_-_Golf_mk2_elbqoz' },
-            { name: 'Dooshen Pillay', make: 'BMW', model: 'E30 325i', cloudId: 'Dooshen_Pillay_-_E30_325i_zex0za' },
-            { name: 'Dooshen Pillay', make: 'Volkswagen', model: 'CITI', cloudId: 'Dooshen_Pillay_-_CITI_l6zbqk' },
-            { name: 'Duen Reddy', make: 'BMW', model: 'M Coupe', cloudId: 'Duen_Reddy_-_M_Coupe_bz8jyx' },
-            { name: 'Duen Reddy', make: 'BMW', model: 'E92 M3', cloudId: 'Duen_Reddy_-_E92_M3_pokjwh' },
-            { name: 'Dwayne Santos', make: 'BMW', model: 'F80 M3', cloudId: 'Dwayne_Santos_-_F80_M3_abfqql' },
-            { name: 'Faadil Osman', make: 'Volkswagen', model: 'Golf 7R', cloudId: 'Faadil_Osman_-_Golf_7R_ifiy2y' },
-            { name: 'Fayaz Sirkhot', make: 'BMW', model: 'E30 325is', cloudId: 'Fayaz_Sirkhot_-_E30_325is_lrksca' },
-            { name: 'Harris Chelladu', make: 'Volkswagen', model: 'Citirox', cloudId: 'Harris_Chelladu_-_Citirox_vxtqre' },
-            { name: 'Harris Chelladu', make: 'Volkswagen', model: 'Golf 8R', cloudId: 'Harris_Chelladu_-_Golf_8R_vrddaa' },
-            { name: 'Irfan Osman', make: 'Volkswagen', model: 'Golf 6R', cloudId: 'Irfaan_Osman_-_Golf_6R_ns6djr' },
-            { name: 'Krinash Naidoo', make: 'BMW', model: 'E30 325i', cloudId: 'Krinash_Naidoo_-_E30_325i_j4jx1l' },
-            { name: 'Kugan Munsami', make: 'BMW', model: 'E36 cab', cloudId: 'Kugan_Munsami_-_E36_325i_cab_ezhnaq' },
-            { name: 'Leighton Pillay', make: 'Volkswagen', model: 'Golf 4, 2 door', cloudId: null },
-            { name: 'Leonard', make: 'Volkswagen', model: 'VR6', cloudId: 'Leonard_-_VR6_svvxai' },
-            { name: 'Manny', make: 'BMW', model: 'E30 M3', cloudId: 'Manny_-_E30_M3_ssynpv' },
-            { name: 'Marco Ferreira', make: 'BMW', model: 'E92 M3', cloudId: 'Marco_Ferreira_-_E92_M3_lwrq83' },
-            { name: 'Milano', make: 'Audi', model: 'S3', cloudId: 'Milano_-_S3_xxzhy' },
-            { name: 'Naeem Seedat', make: 'BMW', model: 'E28 M5', cloudId: null },
-            { name: 'Neeresh Pablo', make: 'Porsche', model: '997 turbo', cloudId: 'Neeresh_Pablo_-_997_turbo_c4fjuj' },
-            { name: 'Preshalan Naidoo', make: 'Audi', model: 'RS3', cloudId: 'Preshalan_Naidoo_-_RS3_b8yhps' },
-            { name: 'Preshan Ramoorthy', make: 'BMW', model: 'E30 325is', cloudId: 'Preshan_Ramoorthy_-_E30_325is_znjlkw' },
-            { name: 'Preshan Ramoorthy', make: 'BMW', model: 'M2 Comp', cloudId: 'Preshan_Ramoorthy_-_M2_Comp_mua3of' },
-            { name: 'Revaun Modern', make: 'BMW', model: 'E92 M3', cloudId: 'Revaun_Modern_-_E92_M3_x4cq7y' },
-            { name: 'Revaun Modern', make: 'BMW', model: 'E46 M3', cloudId: 'Revaun_Modern_-_E46_M3_wfivs5' },
-            { name: 'Ronnie James Botes', make: 'Toyota', model: 'GT86', cloudId: 'Ronnie_James_Botes_-_GT86_qznmeq' },
-            { name: 'Rushay Nana', make: 'BMW', model: 'F80 M3', cloudId: 'Rushay_Nana_-_F80_M3_ixg6fv' },
-            { name: 'Shaheed Collins', make: 'Volkswagen', model: 'Citi velocity 1.4i', cloudId: 'Shaheed_Collins_-_Citi_velocity_1.4i_tgyp78' },
-            { name: 'Teyen Naidoo', make: 'BMW', model: 'E30 Bauer', cloudId: 'Teyen_Naidoo_-_E30_Bauer_h5opqo' },
-            { name: 'Uwais Mohideen', make: 'BMW', model: 'E92 M3', cloudId: 'Uwais_Mohideen_-_E92_M3_j2jfyp' },
-            { name: 'Zaahid Vally', make: 'BMW', model: 'M3 Comp', cloudId: 'Zaahid_Vally_-_M3_Comp_xr9wff' },
-            { name: 'Pravesh Niacker', make: 'BMW', model: 'E46 330ci', cloudId: null }
+            { num: 1, name: 'Amit Doolab', make: 'BMW', model: 'E92 M3', cloudId: '1_BMW_E92_M3_adavnb' },
+            { num: 2, name: 'Chip Moosa', make: 'BMW', model: '850i', cloudId: '2_BMW_850i_eskpwh' },
+            { num: 3, name: 'Chip Moosa', make: 'BMW', model: 'E30 325is', cloudId: '3_BMW_E30_325is_lw4ssz' },
+            { num: 4, name: 'Chip Moosa', make: 'BMW', model: 'E39 535i', cloudId: '4_BMW_E39_535iL_pqediq' },
+            { num: 5, name: 'Devan Moonsammy', make: 'BMW', model: 'E46 M3', cloudId: '5_BMW_F46_M3_eqxkiy' },
+            { num: 6, name: 'Devan Moonsammy', make: 'Mercedes', model: 'C63', cloudId: '6_Merc_C63_q9yrwt' },
+            { num: 7, name: 'Dhiresh Dewnaryan', make: 'BMW', model: 'E92 M3', cloudId: '7_BMW_E92_M3_xe8lcx' },
+            { num: 8, name: 'Dooshen Pillay', make: 'BMW', model: 'E30 325i', cloudId: '8_BMW_E30_325i_zoesz5' },
+            { num: 9, name: 'Dooshen Pillay', make: 'Volkswagen', model: 'CITI', cloudId: '9_VW_CITI_ilxb6w' },
+            { num: 10, name: 'Dooshen Pillay', make: 'Volkswagen', model: 'Golf mk2', cloudId: '10_VW_Golf_mk2_bb5cuf' },
+            { num: 11, name: 'Duen Reddy', make: 'BMW', model: 'M Coupe', cloudId: '11_BMW_M_Coupe_qvqmth' },
+            { num: 12, name: 'Dwayne Santos', make: 'BMW', model: 'F80 M3', cloudId: '12_BMW_F80_M3_tkdnbz' },
+            { num: 13, name: 'Elouis Pillay', make: 'VW', model: 'Polo 8 GTI', cloudId: '13_VW_Polo_8_GTI_djzk3q' },
+            { num: 14, name: 'Faadil Osman', make: 'Volkswagen', model: 'Golf 7R', cloudId: '14_VW_Golf_7R_i5qqcj' },
+            { num: 15, name: 'Fayaz Sirkhot', make: 'BMW', model: 'E30 325is', cloudId: '15_BMW_E30_325is_hdzecd' },
+            { num: 16, name: 'Harris Chelladu', make: 'Volkswagen', model: 'Citirox', cloudId: '16_VW_Citirox_lmorrd' },
+            { num: 17, name: 'Harris Chelladu', make: 'Volkswagen', model: 'Golf 8R', cloudId: '17_VW_Golf_8R_vpfdfjo' },
+            { num: 18, name: 'Kugan Munsami', make: 'BMW', model: 'E36 cab', cloudId: '18_BMW_E36_325i_cab_bqozot' },
+            { num: 19, name: 'Leighton Pillay', make: 'Volkswagen', model: 'Golf 4, 2 door', cloudId: '19_VW_Golf_4_2dr_ms0uk0' },
+            { num: 20, name: 'Manny', make: 'BMW', model: 'E30 M3', cloudId: '20_BMW_E30_M3_wulyfx' },
+            { num: 21, name: 'Marco Ferreira', make: 'BMW', model: 'E92 M3', cloudId: '21_BMW_E92_M3_rpblnu' },
+            { num: 22, name: 'Milano', make: 'Audi', model: 'S3', cloudId: '22_Audi_S3_lquabn' },
+            { num: 23, name: 'Nabeel Dockies', make: 'BMW', model: 'E30 Bauer', cloudId: '23_BMW_E30_Bauer_rIzauv' },
+            { num: 24, name: 'Naeem Seedat', make: 'BMW', model: 'E30 325i', cloudId: '24_BMW_E30_325i_itsnay' },
+            { num: 25, name: 'Neeresh Pablo', make: 'Porsche', model: '997 turbo', cloudId: '25_Porsche_997turbo_al8j50' },
+            { num: 26, name: 'Preshalan Naidoo', make: 'Audi', model: 'RS3', cloudId: '26_Audi_RS3_vk2ohx' },
+            { num: 27, name: 'Preshan Ramoorthy', make: 'BMW', model: 'E30 325is', cloudId: '27_BMW_E30_325is_rjbecu' },
+            { num: 28, name: 'Preshan Ramoorthy', make: 'BMW', model: 'M2 Comp', cloudId: '28_BMW_M2_Comp_foqt0i' },
+            { num: 29, name: 'Revaun Modern', make: 'BMW', model: 'E46 M3', cloudId: '29_BMW_E46_M3_c31ype' },
+            { num: 30, name: 'Revaun Modern', make: 'BMW', model: 'E92 M3', cloudId: '30_BMW_E92_M3_pbrliq' },
+            { num: 31, name: 'Ronnie James Botes', make: 'Toyota', model: 'GT86', cloudId: '31_Toyota_GT86_y2wksp' },
+            { num: 32, name: 'Rushay Nana', make: 'BMW', model: 'F80 M3', cloudId: '32_BMW_F80_M3_olu2it' },
+            { num: 33, name: 'Shaheed Collins', make: 'Volkswagen', model: 'Citi velocity 1.4i', cloudId: '33_VW_Citi_velocity_1.4l_hxensr' },
+            { num: 34, name: 'Shanawaz Vally', make: 'BMW', model: '325is', cloudId: '34_BMW_325is_r4ovpo' },
+            { num: 35, name: 'Teyen Naidoo', make: 'BMW', model: 'E30 Bauer', cloudId: '35_BMW_E30_Bauer_rsmvll' },
+            { num: 36, name: 'Uwais Mohideen', make: 'BMW', model: 'E92 M3', cloudId: '36_BMW_E92_M3_cy0Yrm' },
+            { num: 37, name: 'Zaahid Vally', make: 'BMW', model: 'M3 Comp', cloudId: '37_BMW_M3_Comp_xsnelc' }
         ];
 
         const entrantCategories = [
@@ -502,7 +499,7 @@
                         <label for="carSelect">Select a Vehicle</label>
                         <select id="carSelect" onchange="updateSelection()">
                             <option value="">-- Choose --</option>
-                            ${carData.map((car, idx) => `<option value="${idx}">Car ${idx + 1} | ${car.name} | ${car.make} ${car.model}</option>`).join('')}
+                            ${carData.map((car, idx) => `<option value="${idx}">Car ${car.num} | ${car.name} | ${car.make} ${car.model}</option>`).join('')}
                         </select>
                     </div>
                     <div class="car-image" id="carImageContainer"></div>
@@ -526,23 +523,22 @@
             if (select.value) {
                 const carIdx = parseInt(select.value);
                 const car = carData[carIdx];
-                const carNum = carIdx + 1;
                 
                 confirm.innerHTML = `
                     <div class="selection-confirm-text">Selected</div>
-                    <div class="selection-confirm-value">Car ${carNum} | ${car.name} | ${car.make} ${car.model}</div>
+                    <div class="selection-confirm-value">Car ${car.num} | ${car.name} | ${car.make} ${car.model}</div>
                 `;
                 confirm.classList.add('show');
                 
                 if (car.cloudId) {
                     const imageUrl = CLOUDINARY_BASE + car.cloudId;
-                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${carNum}">`;
+                    carImageContainer.innerHTML = `<img src="${imageUrl}" alt="Car ${car.num}" onerror="this.parentElement.innerHTML='';">`;
                 } else {
                     carImageContainer.innerHTML = '';
                 }
                 
                 nextBtn.disabled = false;
-                votes[categories[currentCategory].id] = select.value;
+                votes[categories[currentCategory].id] = car.num;
             } else {
                 confirm.classList.remove('show');
                 carImageContainer.innerHTML = '';
@@ -571,9 +567,7 @@
         }
 
         function submitVotesToGoogle(voteData) {
-            if (GOOGLE_APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbyxaFljBGquG-6SxNihpeeDp-LkTrkhRYZybWkimYoA4VEjXLY0rxexw_S-WMwyt4DF/exec
-
-AKfycbyxaFljBGquG-6SxNihpeeDp-LkTrkhRYZybWkimYoA4VEjXLY0rxexw_S-WMwyt4DF') {
+            if (GOOGLE_APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
                 console.log('Google Apps Script URL not configured. Votes logged to console:');
                 console.log(JSON.stringify(voteData, null, 2));
                 return;
