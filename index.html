@@ -512,6 +512,15 @@
                     </button>
                 </div>
             `;
+
+            // Restore saved selection
+            if (votes[cat.id] !== undefined) {
+                const idx = carData.findIndex(c => c.num === votes[cat.id]);
+                if (idx >= 0) {
+                    document.getElementById('carSelect').value = idx;
+                    updateSelection();
+                }
+            }
         }
 
         function updateSelection() {
@@ -584,14 +593,6 @@
             if (currentCategory > 0) {
                 currentCategory--;
                 renderCategory();
-                if (votes[categories[currentCategory].id] !== undefined) {
-                    const savedNum = votes[categories[currentCategory].id];
-                    const idx = carData.findIndex(c => c.num === savedNum);
-                    if (idx >= 0) {
-                        document.getElementById('carSelect').value = idx;
-                        updateSelection();
-                    }
-                }
             }
         }
     </script>
