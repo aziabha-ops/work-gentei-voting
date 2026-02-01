@@ -388,7 +388,7 @@
     <script>
         const CLOUDINARY_CLOUD = 'dbee9zuk5';
         const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/`;
-        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyxaFljBGquG-6SxNihpeeDp-LkTrkhRYZybWkimYoA4VEjXLY0rxexw_S-WMwyt4DF/exec';
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2n5A_oMdsayKfCdgb9IoFU2giQE6E4L-0Km5gRIPwX6sJfXyaWYgU7QxQ38wwbPr-/exec';
 
         const carData = [
             { num: 1, make: 'BMW', model: 'E92 M3', cloudId: '1_BMW__E92_M3_adavnb' },
@@ -576,7 +576,7 @@
         }
 
         function submitVotesToGoogle(voteData) {
-            if (GOOGLE_APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+            if (GOOGLE_APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbz2n5A_oMdsayKfCdgb9IoFU2giQE6E4L-0Km5gRIPwX6sJfXyaWYgU7QxQ38wwbPr-/exec') {
                 console.log('Google Apps Script URL not configured. Votes logged to console:');
                 console.log(JSON.stringify(voteData, null, 2));
                 return;
