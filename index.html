@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WORK GENTEI 2026 Voting</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,7 +27,6 @@
       border-radius: 2px;
     }
     .header p { font-size: 1rem; color: #00d4ff; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-
     .card {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(0,212,255,0.15);
@@ -132,7 +131,6 @@
       margin-bottom: 25px;
       align-items: start;
     }
-
     .car-image {
       width: 100%;
       height: 280px;
@@ -262,7 +260,7 @@
 
           <div class="name-input-section">
             <label for="voterName">Your Name *</label>
-            <input type="text" id="voterName" placeholder="e.g. John Smith">
+            <input type="text" id="voterName" placeholder="e.g. John Smith" />
             <span class="error" id="nameError"></span>
           </div>
 
@@ -284,9 +282,9 @@
     const CLOUDINARY_CLOUD = 'dbee9zuk5';
     const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/`;
 
-    // ✅ Your current working Web App URL:
+    // ✅ UPDATED: your latest Apps Script Web App URL
     const GOOGLE_APPS_SCRIPT_URL =
-      'https://script.google.com/macros/s/AKfycbyfmdk4pYvXzh33pBABdzTkUgIv99yVwT3oBqzw49PqfMySI99sxvWHvw7-pO5Cfkyo/exec';
+      'https://script.google.com/macros/s/AKfycbxTcu-dO0fBUW4grGWt6vm9voe4tR85Hk9cpYI2EIIuAWWmNmTHxXtXVod2YM6DqgI/exec';
 
     const carData = [
       { num: 1, make: 'BMW', model: 'E92 M3', cloudId: '1_BMW__E92_M3_adavnb' },
@@ -408,7 +406,7 @@
       if (votes[cat.id] !== undefined) {
         const idx = carData.findIndex(c => c.num === votes[cat.id]);
         if (idx >= 0) {
-          document.getElementById('carSelect').value = idx;
+          document.getElementById('carSelect').value = String(idx);
           updateSelection();
         }
       }
@@ -446,7 +444,7 @@
       }
     }
 
-    function nextCategory() {
+    async function nextCategory() {
       if (currentCategory < categories.length - 1) {
         currentCategory++;
         renderCategory();
@@ -461,13 +459,19 @@
         votes: votes
       };
 
-      submitVotesToGoogle(voteData);
+      const nextBtn = document.getElementById('nextBtn');
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = 'Submitting...';
+      }
+
+      await submitVotesToGoogle(voteData);
 
       alert(`All votes submitted!\n\nVoter: ${voterName}\nRole: ${role}\n\nThank you for voting!`);
-      location.reload();
+      setTimeout(() => location.reload(), 600);
     }
 
-    function submitVotesToGoogle(voteData) {
+    async function submitVotesToGoogle(voteData) {
       const url = (GOOGLE_APPS_SCRIPT_URL || '').trim();
       if (!url) {
         console.warn('Apps Script URL missing; logging voteData:', voteData);
@@ -475,12 +479,20 @@
         return;
       }
 
-      fetch(url, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(voteData)
-      }).catch(e => console.error('Submit network error:', e));
+      // keepalive helps POST survive navigation/reload on modern browsers for small payloads
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          keepalive: true,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(voteData)
+        });
+      } catch (e) {
+        console.error('Submit network error:', e);
+        alert('Submission may have failed (network). Please try again.');
+        throw e;
+      }
     }
 
     function previousCategory() {
